@@ -1,0 +1,54 @@
+﻿@model Restaurantee.ViewModel.pedidoView
+
+@{
+    ViewData["Title"] = "AddArticulos";
+}
+
+
+<h3>@ViewBag.Error</h3>
+
+        <form asp-controller="pedidoDetalles" asp-action="AdicionarArticulo">
+
+            <div class="form-vertical">
+
+                @* CODIGO PARA FORMATEAR LOS FORMULARIOS *@
+                <div class="">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"> Completar los campos</h3>
+
+                                @* FIN DE CODIGO PARA FORMATEAR LOS FORMULARIOS *@
+                                <div class="form-group">
+                                    <label class="control-label">Articulo</label>
+                                    <select asp-for="pedidoDetalle.idPlatos" class="form-control" asp-items="ViewBag.Platoo"></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>cantidad</label>
+                                    <input asp-for="pedidoDetalle.cantidad" class="form-control" />
+                                </div>
+
+                                <div class="form-group" style="display:none">
+                                    <input asp-for="pedidoDetalle.idPedido" class="form-control" value="@ViewData["id"].ToString()" />
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Agregar Artículo" class="btn btn-success" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* FIN DE CODIGO PARA FORMATEAR LOS FORMULARIOS *@
+
+            </div>
+
+        </form>
+ 
+
+
+

@@ -1,0 +1,36 @@
+﻿@model Restaurantee.Models.inventario
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>inventario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ingrediente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ingrediente)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.cantidad)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.clasificacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.clasificacion.idClasificacionIngredientes)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.idInventario">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

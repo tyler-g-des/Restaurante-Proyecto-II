@@ -1,0 +1,53 @@
+﻿@model Restaurantee.Models.pedidoDetalle
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+    <div class="span9">
+        <div class="content">
+            <h2>Edit</h2>
+
+            <h4>pedidoDetalle</h4>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="idPedidoDetalle" />
+                        <div class="form-group">
+                            <label asp-for="cantidad" class="control-label"></label>
+                            <input asp-for="cantidad" class="form-control" />
+                            <span asp-validation-for="cantidad" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="subTotal" class="control-label"></label>
+                            <input asp-for="subTotal" class="form-control" />
+                            <span asp-validation-for="subTotal" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="impuesto" class="control-label"></label>
+                            <input asp-for="impuesto" class="form-control" />
+                            <span asp-validation-for="impuesto" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="total" class="control-label"></label>
+                            <input asp-for="total" class="form-control" />
+                            <span asp-validation-for="total" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="idPedido" class="control-label"></label>
+                            <select asp-for="idPedido" class="form-control" asp-items="ViewBag.idPedido"></select>
+                            <span asp-validation-for="idPedido" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                            <a asp-action="Index">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Restaurantee.Models.inventario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ingrediente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.clasificacion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ingrediente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.clasificacion.idClasificacionIngredientes)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.idInventario">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.idInventario">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.idInventario">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

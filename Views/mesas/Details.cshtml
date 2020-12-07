@@ -1,0 +1,42 @@
+﻿@model Restaurantee.Models.mesa
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>mesa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.numeroMaximoDePersonas)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.numeroMaximoDePersonas)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ubicacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ubicacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.idMesa">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

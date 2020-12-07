@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrimerParcial.Data;
 
-namespace PrimerParcial.Migrations
+namespace Restaurantee.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
@@ -19,48 +19,126 @@ namespace PrimerParcial.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("PrimerParcial.Models.Clasificaciones.ClasificacionArticulos", b =>
+            modelBuilder.Entity("Restaurantee.Models.clasificacionIngredientes", b =>
                 {
-                    b.Property<int>("idClasificacionArticulos")
+                    b.Property<int>("idClasificacionIngredientes")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("TipoDeArticulos");
+                    b.Property<string>("tipoClientes");
 
-                    b.HasKey("idClasificacionArticulos");
+                    b.HasKey("idClasificacionIngredientes");
 
-                    b.ToTable("ClasificacionArticulos");
+                    b.ToTable("clasificacionIngredientes");
                 });
 
-            modelBuilder.Entity("PrimerParcial.Models.Clasificaciones.ClasificacionCliente", b =>
+            modelBuilder.Entity("Restaurantee.Models.inventario", b =>
                 {
-                    b.Property<int>("idClasificacionCliente")
+                    b.Property<int>("idInventario")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("TipoDeCliente");
+                    b.Property<int>("cantidad");
 
-                    b.HasKey("idClasificacionCliente");
+                    b.Property<int>("idClasificacionIngredientes");
 
-                    b.ToTable("clasificacionClientes");
+                    b.Property<string>("ingrediente");
+
+                    b.HasKey("idInventario");
+
+                    b.HasIndex("idClasificacionIngredientes");
+
+                    b.ToTable("inventarios");
                 });
 
-            modelBuilder.Entity("PrimerParcial.Models.Clasificaciones.ClasificacionSuplidor", b =>
+            modelBuilder.Entity("Restaurantee.Models.mesa", b =>
                 {
-                    b.Property<int>("idClasificacionSuplidor")
+                    b.Property<int>("idMesa")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("TipoDeSuplidor");
+                    b.Property<string>("descripcion");
 
-                    b.HasKey("idClasificacionSuplidor");
+                    b.Property<string>("estado");
 
-                    b.ToTable("ClasificacionSuplidor");
+                    b.Property<int>("numeroMaximoDePersonas");
+
+                    b.Property<string>("ubicacion");
+
+                    b.HasKey("idMesa");
+
+                    b.ToTable("mesas");
                 });
 
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Articulo", b =>
+            modelBuilder.Entity("Restaurantee.Models.pedido", b =>
                 {
-                    b.Property<int>("idArticulo")
+                    b.Property<int>("idPedido")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("estado");
+
+                    b.Property<DateTime>("fechaPedido");
+
+                    b.Property<int>("idMesa");
+
+                    b.Property<int>("idPlato");
+
+                    b.Property<decimal>("impuesto");
+
+                    b.Property<string>("observaciones")
+                        .IsRequired();
+
+                    b.Property<string>("persona")
+                        .IsRequired();
+
+                    b.Property<int?>("platoidPlatos");
+
+                    b.Property<decimal>("subTotal");
+
+                    b.Property<decimal>("total");
+
+                    b.HasKey("idPedido");
+
+                    b.HasIndex("idMesa");
+
+                    b.HasIndex("platoidPlatos");
+
+                    b.ToTable("pedidos");
+                });
+
+            modelBuilder.Entity("Restaurantee.Models.pedidoDetalle", b =>
+                {
+                    b.Property<int>("idPedidoDetalle")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("cantidad");
+
+                    b.Property<int>("idPedido");
+
+                    b.Property<int>("idPlatos");
+
+                    b.Property<decimal>("impuesto");
+
+                    b.Property<decimal>("precio");
+
+                    b.Property<decimal>("subTotal");
+
+                    b.Property<decimal>("total");
+
+                    b.HasKey("idPedidoDetalle");
+
+                    b.HasIndex("idPedido");
+
+                    b.HasIndex("idPlatos");
+
+                    b.ToTable("pedidoDetalles");
+                });
+
+            modelBuilder.Entity("Restaurantee.Models.plato", b =>
+                {
+                    b.Property<int>("idPlatos")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -70,549 +148,68 @@ namespace PrimerParcial.Migrations
 
                     b.Property<int>("Precio");
 
-                    b.Property<int>("idClasificacionArticulos");
+                    b.HasKey("idPlatos");
 
-                    b.Property<int>("idMarca");
-
-                    b.HasKey("idArticulo");
-
-                    b.HasIndex("idClasificacionArticulos");
-
-                    b.HasIndex("idMarca");
-
-                    b.ToTable("Articulo");
+                    b.ToTable("plato");
                 });
 
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Ciudad", b =>
+            modelBuilder.Entity("Restaurantee.Models.usuario", b =>
                 {
-                    b.Property<int>("idCiudad")
+                    b.Property<int>("idUsuario")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("apellido");
 
-                    b.Property<int>("idPais");
-
-                    b.Property<string>("nombre");
-
-                    b.HasKey("idCiudad");
-
-                    b.HasIndex("idPais");
-
-                    b.ToTable("Ciudades");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Cliente", b =>
-                {
-                    b.Property<int>("idCliente")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Direccion");
-
-                    b.Property<int?>("DocumentoidTipoDeDocumento");
-
-                    b.Property<string>("email");
-
-                    b.Property<int>("idCiudad");
-
-                    b.Property<int>("idClasificacionCliente");
-
-                    b.Property<int>("idTipoDocumento");
-
-                    b.Property<string>("nombre");
-
-                    b.Property<string>("telefono");
-
-                    b.HasKey("idCliente");
-
-                    b.HasIndex("DocumentoidTipoDeDocumento");
-
-                    b.HasIndex("idCiudad");
-
-                    b.HasIndex("idClasificacionCliente");
-
-                    b.ToTable("Clientes");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Compra", b =>
-                {
-                    b.Property<int>("compraID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("fechaOrden");
-
-                    b.Property<int>("formaEnvioID");
-
-                    b.Property<int>("formaPagoID");
-
-                    b.Property<int>("idCliente");
-
-                    b.Property<decimal>("impuesto");
-
-                    b.Property<string>("observacion");
-
-                    b.Property<decimal>("subtotal");
-
-                    b.Property<decimal>("total");
-
-                    b.HasKey("compraID");
-
-                    b.HasIndex("formaEnvioID");
-
-                    b.HasIndex("formaPagoID");
-
-                    b.HasIndex("idCliente");
-
-                    b.ToTable("Compra");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.CompraDetalle", b =>
-                {
-                    b.Property<int>("compraDetallID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("cantidad");
-
-                    b.Property<int>("compraID");
-
-                    b.Property<int>("idArticulo");
-
-                    b.Property<decimal>("precio");
-
-                    b.Property<decimal>("precioTotal");
-
-                    b.HasKey("compraDetallID");
-
-                    b.HasIndex("compraID");
-
-                    b.HasIndex("idArticulo");
-
-                    b.ToTable("compraDetalles");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Empleado", b =>
-                {
-                    b.Property<int>("idEmpleado")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Direccion");
-
-                    b.Property<int?>("DocumentoidTipoDeDocumento");
-
-                    b.Property<string>("email");
-
-                    b.Property<int>("idCiudad");
-
-                    b.Property<int>("idEmpresa");
-
-                    b.Property<int>("idTipoDocumento");
-
-                    b.Property<string>("nombre");
-
-                    b.Property<string>("telefono");
-
-                    b.HasKey("idEmpleado");
-
-                    b.HasIndex("DocumentoidTipoDeDocumento");
-
-                    b.HasIndex("idCiudad");
-
-                    b.HasIndex("idEmpresa");
-
-                    b.ToTable("Empleados");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Empresa", b =>
-                {
-                    b.Property<int>("idEmpresa")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CodPostal");
-
-                    b.Property<string>("Direccion");
-
-                    b.Property<int>("idUbicacion");
-
-                    b.Property<string>("nombre");
-
-                    b.Property<string>("telefono");
-
-                    b.HasKey("idEmpresa");
-
-                    b.HasIndex("idUbicacion");
-
-                    b.ToTable("Empresas");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.formaEnvio", b =>
-                {
-                    b.Property<int>("formaEnvioID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("formaEnvioDescripcion")
+                    b.Property<string>("clave")
                         .IsRequired();
 
-                    b.HasKey("formaEnvioID");
+                    b.Property<string>("direccion");
 
-                    b.ToTable("formaEnvios");
-                });
+                    b.Property<bool>("estado");
 
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.formaPago", b =>
-                {
-                    b.Property<int>("formaPagoID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("formaPagoDescripcion")
+                    b.Property<string>("nombre")
                         .IsRequired();
 
-                    b.HasKey("formaPagoID");
-
-                    b.ToTable("formaPagos");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Marca", b =>
-                {
-                    b.Property<int>("idMarca")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Descripcion");
-
-                    b.Property<string>("Nombre");
-
-                    b.HasKey("idMarca");
-
-                    b.ToTable("Marca");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Orden", b =>
-                {
-                    b.Property<int>("ordenID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("fechaOrden");
-
-                    b.Property<int>("formaEnvioID");
-
-                    b.Property<int>("formaPagoID");
-
-                    b.Property<int>("idSuplidor");
-
-                    b.Property<decimal>("impuesto");
-
-                    b.Property<string>("observacion");
-
-                    b.Property<decimal>("subtotal");
-
-                    b.Property<decimal>("total");
-
-                    b.HasKey("ordenID");
-
-                    b.HasIndex("formaEnvioID");
-
-                    b.HasIndex("formaPagoID");
-
-                    b.HasIndex("idSuplidor");
-
-                    b.ToTable("Ordens");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.OrdenDetalle", b =>
-                {
-                    b.Property<int>("ordenDetallID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("cantidad");
-
-                    b.Property<int>("idArticulo");
-
-                    b.Property<int>("ordenID");
-
-                    b.Property<decimal>("precio");
-
-                    b.Property<decimal>("precioTotal");
-
-                    b.HasKey("ordenDetallID");
-
-                    b.HasIndex("idArticulo");
-
-                    b.HasIndex("ordenID");
-
-                    b.ToTable("ordenDetalles");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Pais", b =>
-                {
-                    b.Property<int>("idPais")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Descripcion");
-
-                    b.Property<string>("nombre");
-
-                    b.HasKey("idPais");
-
-                    b.ToTable("Paises");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.PuestoDeTrabajo", b =>
-                {
-                    b.Property<int>("idPuesto")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("descripcion");
-
-                    b.Property<string>("nombre");
-
-                    b.HasKey("idPuesto");
-
-                    b.ToTable("puestoDeTrabajos");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Suplidor", b =>
-                {
-                    b.Property<int>("idSuplidor")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("email");
-
-                    b.Property<int>("idCiudad");
-
-                    b.Property<int>("idClasificacionSuplidor");
-
-                    b.Property<string>("nombre");
+                    b.Property<string>("role");
 
                     b.Property<string>("telefono");
 
-                    b.HasKey("idSuplidor");
+                    b.HasKey("idUsuario");
 
-                    b.HasIndex("idCiudad");
-
-                    b.HasIndex("idClasificacionSuplidor");
-
-                    b.ToTable("Suplidor");
+                    b.ToTable("usuario");
                 });
 
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.TipoDeDocumento", b =>
+            modelBuilder.Entity("Restaurantee.Models.inventario", b =>
                 {
-                    b.Property<int>("idTipoDeDocumento")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Documento");
-
-                    b.Property<string>("Numero");
-
-                    b.HasKey("idTipoDeDocumento");
-
-                    b.ToTable("tipoDeDocumentos");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Ubicacion", b =>
-                {
-                    b.Property<int>("idUbicacion")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Calle");
-
-                    b.Property<int>("NoCasa");
-
-                    b.Property<string>("Sector");
-
-                    b.HasKey("idUbicacion");
-
-                    b.ToTable("Ubicaciones");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Vendedor", b =>
-                {
-                    b.Property<int>("idVendedor")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Direccion");
-
-                    b.Property<int?>("DocumentoidTipoDeDocumento");
-
-                    b.Property<string>("email");
-
-                    b.Property<int>("idCiudad");
-
-                    b.Property<int>("idTipoDocumento");
-
-                    b.Property<string>("nombre");
-
-                    b.Property<string>("telefono");
-
-                    b.HasKey("idVendedor");
-
-                    b.HasIndex("DocumentoidTipoDeDocumento");
-
-                    b.HasIndex("idCiudad");
-
-                    b.ToTable("Vendedores");
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Articulo", b =>
-                {
-                    b.HasOne("PrimerParcial.Models.Clasificaciones.ClasificacionArticulos", "ClasificacionArticulos")
+                    b.HasOne("Restaurantee.Models.clasificacionIngredientes", "clasificacion")
                         .WithMany()
-                        .HasForeignKey("idClasificacionArticulos")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PrimerParcial.Models.Entidades.Marca", "Marca")
-                        .WithMany()
-                        .HasForeignKey("idMarca")
+                        .HasForeignKey("idClasificacionIngredientes")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Ciudad", b =>
+            modelBuilder.Entity("Restaurantee.Models.pedido", b =>
                 {
-                    b.HasOne("PrimerParcial.Models.Entidades.Pais", "Pais")
+                    b.HasOne("Restaurantee.Models.mesa", "mesa")
                         .WithMany()
-                        .HasForeignKey("idPais")
+                        .HasForeignKey("idMesa")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Restaurantee.Models.plato", "plato")
+                        .WithMany()
+                        .HasForeignKey("platoidPlatos");
                 });
 
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Cliente", b =>
+            modelBuilder.Entity("Restaurantee.Models.pedidoDetalle", b =>
                 {
-                    b.HasOne("PrimerParcial.Models.Entidades.TipoDeDocumento", "Documento")
+                    b.HasOne("Restaurantee.Models.pedido", "pedido")
                         .WithMany()
-                        .HasForeignKey("DocumentoidTipoDeDocumento");
-
-                    b.HasOne("PrimerParcial.Models.Entidades.Ciudad", "Ciudad")
-                        .WithMany()
-                        .HasForeignKey("idCiudad")
+                        .HasForeignKey("idPedido")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("PrimerParcial.Models.Clasificaciones.ClasificacionCliente", "clasificacionCliente")
+                    b.HasOne("Restaurantee.Models.plato", "plato")
                         .WithMany()
-                        .HasForeignKey("idClasificacionCliente")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Compra", b =>
-                {
-                    b.HasOne("PrimerParcial.Models.Entidades.formaEnvio", "FormaEnvio")
-                        .WithMany()
-                        .HasForeignKey("formaEnvioID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PrimerParcial.Models.Entidades.formaPago", "FormaPago")
-                        .WithMany()
-                        .HasForeignKey("formaPagoID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PrimerParcial.Models.Entidades.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("idCliente")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.CompraDetalle", b =>
-                {
-                    b.HasOne("PrimerParcial.Models.Entidades.Compra", "Compra")
-                        .WithMany()
-                        .HasForeignKey("compraID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PrimerParcial.Models.Entidades.Articulo", "Articulo")
-                        .WithMany()
-                        .HasForeignKey("idArticulo")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Empleado", b =>
-                {
-                    b.HasOne("PrimerParcial.Models.Entidades.TipoDeDocumento", "Documento")
-                        .WithMany()
-                        .HasForeignKey("DocumentoidTipoDeDocumento");
-
-                    b.HasOne("PrimerParcial.Models.Entidades.Ciudad", "Ciudad")
-                        .WithMany()
-                        .HasForeignKey("idCiudad")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PrimerParcial.Models.Entidades.Empresa", "Empresa")
-                        .WithMany()
-                        .HasForeignKey("idEmpresa")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Empresa", b =>
-                {
-                    b.HasOne("PrimerParcial.Models.Entidades.Ubicacion", "Ubicacion")
-                        .WithMany()
-                        .HasForeignKey("idUbicacion")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Orden", b =>
-                {
-                    b.HasOne("PrimerParcial.Models.Entidades.formaEnvio", "FormaEnvio")
-                        .WithMany()
-                        .HasForeignKey("formaEnvioID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PrimerParcial.Models.Entidades.formaPago", "FormaPago")
-                        .WithMany()
-                        .HasForeignKey("formaPagoID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PrimerParcial.Models.Entidades.Suplidor", "Suplidor")
-                        .WithMany()
-                        .HasForeignKey("idSuplidor")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.OrdenDetalle", b =>
-                {
-                    b.HasOne("PrimerParcial.Models.Entidades.Articulo", "Articulo")
-                        .WithMany()
-                        .HasForeignKey("idArticulo")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PrimerParcial.Models.Entidades.Orden", "Orden")
-                        .WithMany()
-                        .HasForeignKey("ordenID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Suplidor", b =>
-                {
-                    b.HasOne("PrimerParcial.Models.Entidades.Ciudad", "Ciudad")
-                        .WithMany()
-                        .HasForeignKey("idCiudad")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PrimerParcial.Models.Clasificaciones.ClasificacionSuplidor", "clasificacionSuplidor")
-                        .WithMany()
-                        .HasForeignKey("idClasificacionSuplidor")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PrimerParcial.Models.Entidades.Vendedor", b =>
-                {
-                    b.HasOne("PrimerParcial.Models.Entidades.TipoDeDocumento", "Documento")
-                        .WithMany()
-                        .HasForeignKey("DocumentoidTipoDeDocumento");
-
-                    b.HasOne("PrimerParcial.Models.Entidades.Ciudad", "Ciudad")
-                        .WithMany()
-                        .HasForeignKey("idCiudad")
+                        .HasForeignKey("idPlatos")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
